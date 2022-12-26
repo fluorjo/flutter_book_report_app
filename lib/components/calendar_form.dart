@@ -11,7 +11,6 @@ class TableCalendarScreen extends StatelessWidget {
       firstDay: DateTime.utc(2022, 11, 1),
       lastDay: DateTime.utc(2030, 3, 14),
       focusedDay: DateTime.now(),
-      
     );
   }
 }
