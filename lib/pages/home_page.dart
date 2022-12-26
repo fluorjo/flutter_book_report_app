@@ -1,3 +1,4 @@
+import 'package:book_report/components/calendar_form.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatelessWidget {
@@ -17,9 +18,13 @@ class HomePage extends StatelessWidget {
           ),
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(children: const []),
+      body: Column(
+        children: const [
+          Padding(
+            padding: EdgeInsets.all(16.0),
+          ),
+          TableCalendarScreen(),
+        ],
       ),
     );
   }

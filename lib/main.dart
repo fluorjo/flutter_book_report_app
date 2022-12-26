@@ -1,9 +1,10 @@
 import 'package:book_report/pages/home_page.dart';
 import 'package:book_report/pages/login_page.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/date_symbol_data_local.dart';
 
 void main() {
-  runApp(MyApp());
+  initializeDateFormatting().then((_) => runApp(MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -22,7 +23,7 @@ class MyApp extends StatelessWidget {
           ),
         ),
       ),
-      initialRoute: "/login",
+      initialRoute: "/home",
       routes: {
         "/login": (context) => LoginPage(),
         "/home": (context) => HomePage(),
