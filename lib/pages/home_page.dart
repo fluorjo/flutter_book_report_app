@@ -1,5 +1,4 @@
 import 'package:book_report/components/calendar_form.dart';
-import 'package:book_report/components/text_field_form.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatelessWidget {
@@ -19,14 +18,25 @@ class HomePage extends StatelessWidget {
           ),
         ),
       ),
-      body: Column(
-        children: [
-          Padding(
-            padding: EdgeInsets.all(16.0),
-          ),
-          TableCalendarScreen(),
-          TextFieldMain(),
-        ],
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            const Padding(
+              padding: EdgeInsets.all(16.0),
+            ),
+            const TableCalendarScreen(),
+            //TextFieldMain(),
+            Container(
+              width: 100,
+              height: 100,
+              decoration: const BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage('assets/prince.jpg'),
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
