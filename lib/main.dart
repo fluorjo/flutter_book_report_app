@@ -1,5 +1,6 @@
 import 'package:book_report/pages/home_page.dart';
 import 'package:book_report/pages/login_page.dart';
+import 'package:book_report/pages/book_page.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
 
@@ -23,10 +24,11 @@ class MyApp extends StatelessWidget {
           ),
         ),
       ),
-      initialRoute: "/home",
+      initialRoute: "/bookinfo",
       routes: {
         "/login": (context) => LoginPage(),
         "/home": (context) => HomePage(),
+        "/bookinfo": (context) => BookPage(),
       },
     );
   }
