@@ -41,6 +41,7 @@ class _HttpApp extends State<HttpApp> {
                   textAlign: TextAlign.center,
                 )
               : ListView.builder(
+                  itemCount: data.length,
                   itemBuilder: (context, index) {
                     return Card(
                       child: Container(
