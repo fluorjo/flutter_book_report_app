@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-//import 'dart:convert';
+import 'dart:convert';
 
 class BookPage extends StatelessWidget {
   @override
@@ -18,6 +18,13 @@ class HttpApp extends StatefulWidget {
 
 class _HttpApp extends State<HttpApp> {
   String result = '';
+  late List data;
+
+  @override
+  void initState() {
+    super.initState();
+    data = [];
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,9 +49,14 @@ class _HttpApp extends State<HttpApp> {
   Future<String> getJSONData() async {
     var url = 'https://dapi.kakao.com/v3/search/book?target=title&query=doit';
 //    var response = await http.get(Uri.parse(url));
-    var response = await http.get(Uri.parse(url),
-        headers: {"Authorization": "KakaoAK cc88f89bd0a8b58cce4d732fac88b0e8"});
-    print(response.body);
-    return "성공";
+    const apikey = 'cc88f89bd0a8b58cce4d732fac88b0e8';
+    var response = await http
+        .get(Uri.parse(url), headers: {"Authorization": "KakaoAK $apikey"});
+    setState(() {
+      var dataConvertedToJSON = json.decode(response.body);
+      List result = dataConvertedToJSON['documents'];
+      data.addAll(result);
+    });
+    return response.body;
   }
 }
