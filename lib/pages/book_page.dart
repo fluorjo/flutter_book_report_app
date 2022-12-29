@@ -45,19 +45,35 @@ class _HttpApp extends State<HttpApp> {
                   itemBuilder: (context, index) {
                     return Card(
                       child: Container(
-                        child: Column(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
                           children: <Widget>[
-                            Text(data[index]['title'].toString()),
-                            Text(data[index]['authors'].toString()),
-                            Text(data[index]['sale_price'].toString()),
-                            Text(data[index]['status'].toString()),
                             Image.network(
                               data[index]['thumbnail'],
                               height: 100,
                               width: 100,
                               fit: BoxFit.contain,
+                            ),
+                            Column(
+                              children: <Widget>[
+                                Container(
+                                  width:
+                                      MediaQuery.of(context).size.width - 150,
+                                  child: Text(
+                                    data[index]['title'].toString(),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ),
+                                Text(
+                                    '저자 :${data[index]['authors'].toString()}'),
+                                Text(
+                                    '가격 :${data[index]['sale_price'].toString()}'),
+                                Text(
+                                    '판매상태 :${data[index]['status'].toString()}'),
+                              ],
                             )
                           ],
+          
                         ),
                       ),
                     );
