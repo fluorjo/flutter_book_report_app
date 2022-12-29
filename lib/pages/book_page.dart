@@ -20,12 +20,25 @@ class _HttpApp extends State<HttpApp> {
   String result = '';
   late List data;
   late TextEditingController _editingController;
+  late ScrollController _scrollController;
+  int page = 1;
 
   @override
   void initState() {
     super.initState();
     data = [];
     _editingController = TextEditingController();
+    _scrollController = ScrollController();
+
+    _scrollController.addListener(() {
+      if (_scrollController.offset >=
+              _scrollController.position.maxScrollExtent &&
+          !_scrollController.position.outOfRange) {
+        print('다음 페이지');
+        page++;
+        getJSONData();
+      }
+    });
   }
 
   @override
@@ -49,6 +62,7 @@ class _HttpApp extends State<HttpApp> {
                 )
               : ListView.builder(
                   itemCount: data.length,
+                  controller: _scrollController,
                   itemBuilder: (context, index) {
                     return Card(
                       child: Container(
@@ -89,6 +103,8 @@ class _HttpApp extends State<HttpApp> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
+          page = 1;
+          data.clear;
           getJSONData();
         },
         child: const Icon(Icons.file_download),
