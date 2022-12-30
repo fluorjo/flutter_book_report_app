@@ -33,11 +33,14 @@ dependencies:
     sdk: flutter
     
   http: ^0.13.5
-  url_launcher: ^6.1.7
+  url_launcher: ^6.0.9
   shared_preferences: ^2.0.15
   flutter_svg: ^1.1.6
   table_calendar: ^3.0.8
   intl: ^0.17.0
+  outline_material_icons: ^0.1.1
+  sqflite: ^2.2.2
+
 
 
 
