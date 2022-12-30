@@ -17,15 +17,18 @@ class _memoHomePageState extends State<memoHomePage> {
       appBar: AppBar(
         title: const Text('sddd'),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: const <Widget>[
-            Text(
-              '이 버튼 여러 번 누름:',
-            ),
-          ],
-        ),
+      body: ListView(
+        physics: const BouncingScrollPhysics(),
+        children: <Widget>[
+          Row(
+            children: const <Widget>[
+              Padding(
+                  padding: EdgeInsets.only(left: 20, top: 20, bottom: 20),
+                  child: Text('메모',
+                      style: TextStyle(fontSize: 36, color: Colors.blue)))
+            ],
+          ),
+        ],
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
@@ -39,3 +42,12 @@ class _memoHomePageState extends State<memoHomePage> {
     );
   }
 }
+
+// LoadMemo() {
+//   List<Widget> memoList = [];
+//   memoList.add(Container(
+//     color: Colors.pinkAccent,
+//     height: 100,
+//   ));
+//   return memoList;
+// }
