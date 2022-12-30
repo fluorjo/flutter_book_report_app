@@ -21,10 +21,14 @@ class _memoHomePageState extends State<memoHomePage> {
       ),
       body: Column(
         children: <Widget>[
-          const Padding(
-              padding: EdgeInsets.only(left: 20, top: 20, bottom: 20),
-              child: Text('메모',
-                  style: TextStyle(fontSize: 36, color: Colors.blue))),
+          Padding(
+            padding: const EdgeInsets.only(left: 20, top: 40, bottom: 20),
+            child: Container(
+              alignment: Alignment.centerLeft,
+              child: const Text('메모',
+                  style: TextStyle(fontSize: 36, color: Colors.blue)),
+            ),
+          ),
           Expanded(child: memoBuilder())
         ],
       ),
@@ -50,7 +54,14 @@ Widget memoBuilder() {
   return FutureBuilder(
     builder: (context, AsyncSnapshot Snap) {
       if (Snap.data?.isEmpty ?? true) {
-        return Container(child: const Text("메모를 추가해보세요"));
+        return Container(
+          alignment: Alignment.center,
+          child: const Text(
+            "메모를 추가해보세요",
+            style: TextStyle(fontSize: 15, color: Colors.blueAccent),
+            textAlign: TextAlign.center,
+          ),
+        );
       }
       return ListView.builder(
         scrollDirection: Axis.vertical,
@@ -71,7 +82,6 @@ Widget memoBuilder() {
     future: loadMemo(),
   );
 }
-
 // LoadMemo() {
 //   List<Widget> memoList = [];
 //   memoList.add(Container(
