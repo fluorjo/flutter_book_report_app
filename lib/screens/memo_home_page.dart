@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'memo_write_page.dart';
+import 'package:book_report/database/memo_db_crud.dart';
+import 'package:book_report/database/memo_data_form.dart';
 
 class memoHomePage extends StatefulWidget {
   const memoHomePage({Key? key, this.title}) : super(key: key);
@@ -17,17 +19,13 @@ class _memoHomePageState extends State<memoHomePage> {
       appBar: AppBar(
         title: const Text('sddd'),
       ),
-      body: ListView(
-        physics: const BouncingScrollPhysics(),
+      body: Column(
         children: <Widget>[
-          Row(
-            children: const <Widget>[
-              Padding(
-                  padding: EdgeInsets.only(left: 20, top: 20, bottom: 20),
-                  child: Text('메모',
-                      style: TextStyle(fontSize: 36, color: Colors.blue)))
-            ],
-          ),
+          const Padding(
+              padding: EdgeInsets.only(left: 20, top: 20, bottom: 20),
+              child: Text('메모',
+                  style: TextStyle(fontSize: 36, color: Colors.blue))),
+          Expanded(child: memoBuilder())
         ],
       ),
       floatingActionButton: FloatingActionButton.extended(
@@ -41,6 +39,37 @@ class _memoHomePageState extends State<memoHomePage> {
       ),
     );
   }
+}
+
+Future<List<Memo>> loadMemo() async {
+  DBHelper sd = DBHelper();
+  return await sd.memos();
+}
+
+Widget memoBuilder() {
+  return FutureBuilder(
+    builder: (context, AsyncSnapshot Snap) {
+      if (Snap.data?.isEmpty ?? true) {
+        return Container(child: const Text("메모를 추가해보세요"));
+      }
+      return ListView.builder(
+        scrollDirection: Axis.vertical,
+        shrinkWrap: true,
+        itemCount: Snap.data.length,
+        itemBuilder: (context, index) {
+          Memo memo = Snap.data[index];
+          return Column(
+            children: <Widget>[
+              Text(memo.title),
+              Text(memo.text),
+              Text(memo.editTime),
+            ],
+          );
+        },
+      );
+    },
+    future: loadMemo(),
+  );
 }
 
 // LoadMemo() {
