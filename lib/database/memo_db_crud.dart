@@ -15,7 +15,7 @@ class DBHelper {
       //데이터베이스 생성시 메모를 저장할 테이블을 생성
       onCreate: (db, version) {
         return db.execute(
-          "CREATE TABLE memos(id INTEGER PRIMARY KEY, title TEXT, text TEXT, createTime TEXT, editTime TEXT)",
+          "CREATE TABLE memos(id TEXT PRIMARY KEY, title TEXT, text TEXT, createTime TEXT, editTime TEXT)",
         );
       },
       //oncreate 함수에서 수행되며 데이터베이스의 업/다운그레이드를 수행하기 위한 경로를 제공
@@ -41,7 +41,7 @@ class DBHelper {
 
     return List.generate(maps.length, (i) {
       return Memo(
-        id: int.parse(maps[i]['id']),
+        id: maps[i]['id'],
         title: maps[i]['title'],
         text: maps[i]['text'],
         createTime: maps[i]['createTime'],
@@ -61,7 +61,7 @@ class DBHelper {
     );
   }
 
-  Future<void> deleteMemo(int id) async {
+  Future<void> deleteMemo(String id) async {
     final db = await database;
 
     await db.delete(

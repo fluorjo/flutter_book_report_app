@@ -40,6 +40,8 @@ dependencies:
   intl: ^0.17.0
   outline_material_icons: ^0.1.1
   sqflite: ^2.2.2
+  crypto: ^3.0.2
+
 
 
 
