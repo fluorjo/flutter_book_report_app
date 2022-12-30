@@ -71,9 +71,14 @@ Widget memoBuilder() {
           Memo memo = Snap.data[index];
           return Column(
             children: <Widget>[
-              Text(memo.title),
-              Text(memo.text),
-              Text(memo.editTime),
+              Text(memo.title,
+                  style: const TextStyle(
+                      fontSize: 25, fontWeight: FontWeight.w500)),
+              Text(memo.text,
+                  style: const TextStyle(
+                      fontSize: 23, fontWeight: FontWeight.w300)),
+              Text("최종 수정 시간:${memo.editTime.split('.')[0]}",
+                  style: const TextStyle(fontSize: 18)),
             ],
           );
         },
