@@ -17,7 +17,7 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    textData();
+    testData();
     return MaterialApp(
       theme: ThemeData(
         textButtonTheme: TextButtonThemeData(
@@ -42,7 +42,7 @@ class MyApp extends StatelessWidget {
     );
   }
 
-  Future textData() async {
+  Future testData() async {
     await Firebase.initializeApp();
     FirebaseFirestore db = FirebaseFirestore.instance;
     var data = await db.collection('event_details').get();
