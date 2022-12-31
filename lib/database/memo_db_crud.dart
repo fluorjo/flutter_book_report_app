@@ -70,4 +70,21 @@ class DBHelper {
       whereArgs: [id],
     );
   }
-}
+
+
+  Future<List<Memo>> findmemo(String id) async {
+    final db = await database;
+
+    final List<Map<String, dynamic>> maps = await db.query('memos',where:"id=?",whereArgs: [id]);
+
+    return List.generate(maps.length, (i) {
+      return Memo(
+        id: maps[i]['id'],
+        title: maps[i]['title'],
+        text: maps[i]['text'],
+        createTime: maps[i]['createTime'],
+        editTime: maps[i]['editTime'],
+      );
+    });
+  }
+  }

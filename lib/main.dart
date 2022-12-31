@@ -2,6 +2,7 @@ import 'package:book_report/pages/home_page.dart';
 import 'package:book_report/pages/login_page.dart';
 import 'package:book_report/pages/book_page.dart';
 import 'package:book_report/pages/memo_main_page.dart';
+import 'package:book_report/screens/memo_view_page.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
 
@@ -25,12 +26,14 @@ class MyApp extends StatelessWidget {
           ),
         ),
       ),
-      initialRoute: "/memomain",
+      initialRoute: "/memoview",
       routes: {
         "/login": (context) => LoginPage(),
         "/home": (context) => HomePage(),
         "/bookinfo": (context) => BookPage(),
         "/memomain": (context) => MemoPage(),
+        "/memoview": (context) => memoViewPage(),
+
       },
     );
   }

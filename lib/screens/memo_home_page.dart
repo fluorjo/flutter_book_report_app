@@ -114,7 +114,7 @@ class _memoHomePageState extends State<memoHomePage> {
                 Navigator.push(
                     parentContext,
                     CupertinoPageRoute(
-                        builder: (parentContext) => ViewPage(id: memo.id)));
+                        builder: (parentContext) => memoViewPage(id: memo.id)));
               },
               onLongPress: () {
                 deleteid = memo.id;
