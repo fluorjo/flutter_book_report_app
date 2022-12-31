@@ -72,7 +72,7 @@ class DBHelper {
   }
 
 
-  Future<List<Memo>> findmemo(String id) async {
+  Future<List<Memo>> findMemo(String id) async {
     final db = await database;
 
     final List<Map<String, dynamic>> maps = await db.query('memos',where:"id=?",whereArgs: [id]);

@@ -8,7 +8,7 @@ class memoViewPage extends StatefulWidget {
   const memoViewPage({Key? key, required this.id}) : super(key: key);
 
   final String id;
-  
+
   @override
   _memoViewPageState createState() => _memoViewPageState();
 }
@@ -44,7 +44,7 @@ class _memoViewPageState extends State<memoViewPage> {
   Future<List<Memo>> loadMemo(String id) async {
     DBHelper sd = DBHelper();
 
-    return await  sd.findMemo(id);
+    return await sd.findMemo(id);
   }
 
   loadBuilder() {
@@ -54,7 +54,7 @@ class _memoViewPageState extends State<memoViewPage> {
         if (snapshot.data == null || snapshot.data == []) {
           return Container(child: const Text("데이터를 불러올 수 없습니다."));
         } else {
-          Memo memo = snapshot.data[0];
+          Memo memo = snapshot.data![0];
           return Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
