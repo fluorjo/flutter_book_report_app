@@ -4,7 +4,7 @@ import 'package:book_report/database/memo_data_form.dart';
 
 
 class memoEditPage extends StatefulWidget {
-  memoEditPage({Key key, this.id}) : super(key: key);
+  memoEditPage({Key? key, this.id}) : super(key: key);
   final String id;
 
   @override
