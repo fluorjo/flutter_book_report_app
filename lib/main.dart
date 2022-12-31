@@ -4,6 +4,10 @@ import 'package:book_report/pages/book_page.dart';
 import 'package:book_report/pages/memo_main_page.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
+//import 'package:book_report/screens/login_screen_splash.dart';
+
+import 'package:firebase_core/firebase_core.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -13,6 +17,7 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    textData();
     return MaterialApp(
       theme: ThemeData(
         textButtonTheme: TextButtonThemeData(
@@ -26,14 +31,25 @@ class MyApp extends StatelessWidget {
           ),
         ),
       ),
-      initialRoute: "/home",
+      initialRoute: "/login",
       routes: {
+        //   "/": (context) => loginSplashScreen(),
         "/login": (context) => LoginPage(),
         "/home": (context) => HomePage(),
         "/bookinfo": (context) => BookPage(),
         "/memomain": (context) => MemoPage(),
-        // "/memoview": (context) => memoViewPage(),
       },
     );
+  }
+
+  Future textData() async {
+    await Firebase.initializeApp();
+    FirebaseFirestore db = FirebaseFirestore.instance;
+    var data = await db.collection('event_details').get();
+    var details = data.docs.toList();
+
+    for (var d in details) {
+      print(d.id);
+    }
   }
 }
