@@ -66,8 +66,6 @@ class memoWritePage extends StatelessWidget {
     );
 
     await sd.insertMemo(fido);
-
-    print(await sd.memos());
   }
 
   String Str25ha512(String text) {

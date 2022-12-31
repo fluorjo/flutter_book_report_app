@@ -26,7 +26,7 @@ class _memoViewPageState extends State<memoViewPage> {
             onPressed: showAlertDialog,
           ),
           IconButton(
-            icon: const Icon(Icons.save),
+            icon: const Icon(Icons.edit),
             onPressed: () {
               Navigator.push(
                   context,
