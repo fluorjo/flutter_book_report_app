@@ -13,6 +13,7 @@ class memoHomePage extends StatefulWidget {
 }
 
 class _memoHomePageState extends State<memoHomePage> {
+  String deleteid = '';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,7 +30,7 @@ class _memoHomePageState extends State<memoHomePage> {
                   style: TextStyle(fontSize: 36, color: Colors.blue)),
             ),
           ),
-          Expanded(child: memoBuilder())
+          Expanded(child: memoBuilder(context))
         ],
       ),
       floatingActionButton: FloatingActionButton.extended(
@@ -43,55 +44,109 @@ class _memoHomePageState extends State<memoHomePage> {
       ),
     );
   }
-}
 
-Future<List<Memo>> loadMemo() async {
-  DBHelper sd = DBHelper();
-  return await sd.memos();
-}
+  Future<List<Memo>> loadMemo() async {
+    DBHelper sd = DBHelper();
+    return await sd.memos();
+  }
 
-Widget memoBuilder() {
-  return FutureBuilder(
-    builder: (context, AsyncSnapshot Snap) {
-      if (Snap.data?.isEmpty ?? true) {
-        return Container(
-          alignment: Alignment.center,
-          child: const Text(
-            "메모를 추가해보세요",
-            style: TextStyle(fontSize: 15, color: Colors.blueAccent),
-            textAlign: TextAlign.center,
-          ),
+  Future<void> deleteMemo(String id) async {
+    DBHelper sd = DBHelper();
+    return await sd.deleteMemo(id);
+  }
+
+  void showAlertDialog(BuildContext context) async {
+    await showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('삭제 경고'),
+          content: const Text("정말 삭제하시겠습니까?"),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('삭제'),
+              onPressed: () {
+                Navigator.pop(context, '삭제');
+                setState(() {
+                  deleteMemo(deleteid);
+                });
+                deleteid = '';
+              },
+            ),
+            TextButton(
+              child: const Text('취소'),
+              onPressed: () {
+                deleteid = '';
+                Navigator.pop(context, '취소');
+              },
+            ),
+          ],
         );
-      }
-      return ListView.builder(
-        scrollDirection: Axis.vertical,
-        shrinkWrap: true,
-        itemCount: Snap.data.length,
-        itemBuilder: (context, index) {
-          Memo memo = Snap.data[index];
-          return Column(
-            children: <Widget>[
-              Text(memo.title,
-                  style: const TextStyle(
-                      fontSize: 25, fontWeight: FontWeight.w500)),
-              Text(memo.text,
-                  style: const TextStyle(
-                      fontSize: 23, fontWeight: FontWeight.w300)),
-              Text("최종 수정 시간:${memo.editTime.split('.')[0]}",
-                  style: const TextStyle(fontSize: 18)),
-            ],
+      },
+    );
+  }
+
+  Widget memoBuilder(BuildContext parentContext) {
+    return FutureBuilder(
+      builder: (context, AsyncSnapshot Snap) {
+        if (Snap.data?.isEmpty ?? true) {
+          return Container(
+            alignment: Alignment.center,
+            child: const Text(
+              "메모를 추가해보세요",
+              style: TextStyle(fontSize: 15, color: Colors.blueAccent),
+              textAlign: TextAlign.center,
+            ),
           );
-        },
-      );
-    },
-    future: loadMemo(),
-  );
+        }
+        return ListView.builder(
+          scrollDirection: Axis.vertical,
+          shrinkWrap: true,
+          itemCount: Snap.data.length,
+          itemBuilder: (context, index) {
+            Memo memo = Snap.data[index];
+            return InkWell(
+              onTap: () {},
+              onLongPress: () {
+                deleteid = memo.id;
+                showAlertDialog(parentContext);
+              },
+              child: Container(
+                margin: const EdgeInsets.all(5),
+                padding: const EdgeInsets.all(4),
+                alignment: Alignment.center,
+                height: 100,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  border: Border.all(
+                    color: Colors.blue,
+                    width: 1,
+                  ),
+                  boxShadow: const [
+                    BoxShadow(color: Colors.blue, blurRadius: 3)
+                  ],
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Column(
+                  children: <Widget>[
+                    Text(memo.title,
+                        style: const TextStyle(
+                            fontSize: 25, fontWeight: FontWeight.w500)),
+                    Text(memo.text,
+                        style: const TextStyle(
+                            fontSize: 23, fontWeight: FontWeight.w300)),
+                    Text("최종 수정 시간: ${memo.editTime.split('.')[0]}",
+                        style: const TextStyle(fontSize: 18)),
+                  ],
+                ),
+              ),
+            );
+          },
+        );
+      },
+      future: loadMemo(),
+    );
+  }
+
 }
-// LoadMemo() {
-//   List<Widget> memoList = [];
-//   memoList.add(Container(
-//     color: Colors.pinkAccent,
-//     height: 100,
-//   ));
-//   return memoList;
-// }
