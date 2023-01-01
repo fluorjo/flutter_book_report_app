@@ -12,7 +12,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:book_report/screens/event_screen.dart';
 import 'package:book_report/screens/launch_screen.dart';
 
+import 'package:book_report/models/favorite.dart';
+
 void main() async {
+ 
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
 
@@ -36,14 +39,13 @@ class MyApp extends StatelessWidget {
           ),
         ),
       ),
-      initialRoute: "/LaunchScreen",
+      initialRoute: "/login",
       routes: {
         //   "/": (context) => loginSplashScreen(),
         "/login": (context) => LoginPage(),
         "/home": (context) => HomePage(),
         "/bookinfo": (context) => BookPage(),
         "/memomain": (context) => MemoPage(),
-  //      "/EventScreen": (context) => EventScreen(),
         "/LaunchScreen": (context) => LaunchScreen(),
       },
     );

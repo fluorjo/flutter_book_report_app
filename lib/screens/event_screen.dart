@@ -4,6 +4,7 @@ import 'package:book_report/models/event_detail.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:book_report/pages/login_page.dart';
 import 'package:book_report/shared/authentication.dart';
+import 'package:book_report/shared/firestore_helper.dart';
 
 class EventScreen extends StatelessWidget {
   final String uid;
@@ -28,12 +29,14 @@ class EventScreen extends StatelessWidget {
             )
           ],
         ),
-        body: EventList());
+        body: EventList(uid));
   }
 }
 
 class EventList extends StatefulWidget {
-  EventList() {
+  final String uid;
+
+  EventList(this.uid) {
     Firebase.initializeApp();
   }
 
@@ -64,14 +67,14 @@ class _EventListState extends State<EventList> {
       itemBuilder: (context, position) {
         String sub =
             'Date: ${details[position].date} - Start: ${details[position].startTime} - End: ${details[position].endTime}';
-        //Color starColor = (isUserFavorite(details[position].id) ? Colors.amber : Colors.grey);
+
         return ListTile(
           title: Text(details[position].description),
           subtitle: Text(sub),
-          // trailing: IconButton(
-          //   icon: Icon(Icons.star, color: starColor),
-          //   onPressed: () {toggleFavorite(details[position]);},
-          // ),
+          trailing: IconButton(
+             icon: Icon(Icons.star, color: Colors.grey),
+             onPressed: () {toggleFavorite(details[position]);},
+           ),
         );
       },
     );
@@ -88,4 +91,11 @@ class _EventListState extends State<EventList> {
     }
     return details;
   }
+
+  void toggleFavorite(EventDetail ed)  {
+     FirestoreHelper.addFavorite(ed,widget.uid);
+
+  }
+
+  
 }
