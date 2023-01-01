@@ -10,6 +10,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:book_report/screens/event_screen.dart';
+import 'package:book_report/screens/launch_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -35,7 +36,7 @@ class MyApp extends StatelessWidget {
           ),
         ),
       ),
-      initialRoute: "/login",
+      initialRoute: "/LaunchScreen",
       routes: {
         //   "/": (context) => loginSplashScreen(),
         "/login": (context) => LoginPage(),
@@ -43,6 +44,7 @@ class MyApp extends StatelessWidget {
         "/bookinfo": (context) => BookPage(),
         "/memomain": (context) => MemoPage(),
         "/EventScreen": (context) => EventScreen(),
+        "/LaunchScreen": (context) => LaunchScreen(),
       },
     );
   }

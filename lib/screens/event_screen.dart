@@ -4,6 +4,9 @@ import 'package:book_report/models/event_detail.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 class EventScreen extends StatelessWidget {
+
+    final String uid;
+  EventScreen(this.uid);
   @override
   Widget build(BuildContext context) {
     return Scaffold(

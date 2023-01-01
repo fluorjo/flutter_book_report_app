@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import '../shared/authentication.dart';
+import '../screens/event_screen.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -10,14 +12,14 @@ class _LoginPageState extends State<LoginPage> {
   late String _userId;
   late String _password;
   late String _email;
-  final String _message = "";
+  String _message = "";
   final TextEditingController txtEmail = TextEditingController();
   final TextEditingController txtPassword = TextEditingController();
-  //Authentication auth;
+  Authentication? auth;
 
   @override
   void initState() {
-    //auth = Authentication();
+    auth = Authentication();
     super.initState();
   }
 
@@ -79,13 +81,36 @@ class _LoginPageState extends State<LoginPage> {
         height: 50,
         child: ElevatedButton(
           child: Text(buttonText),
-          onPressed: () {},
+          onPressed: () {
+            submit;
+          },
         ),
       ),
     );
   }
 
-  Future submit() async {}
+  Future submit() async {
+    setState(() {
+      _message = "";
+    });
+    try {
+      if (_isLogin) {
+        _userId = await auth!.login(txtEmail.text, txtPassword.text);
+        print('Login for user $_userId');
+      } else {
+        _userId = await auth!.signUp(txtEmail.text, txtPassword.text);
+        print('Sign up for user $_userId');
+      }
+      Navigator.push(context,
+          MaterialPageRoute(builder: (context) => EventScreen(_userId)));
+    } catch (e) {
+      print('Error: $e');
+      setState(() {
+        _message = e.toString();
+      });
+    }
+  }
+
   Widget secondaryButton() {
     String buttonText = !_isLogin ? 'Login' : 'Sign up';
     return TextButton(
