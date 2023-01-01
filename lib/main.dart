@@ -43,7 +43,7 @@ class MyApp extends StatelessWidget {
         "/home": (context) => HomePage(),
         "/bookinfo": (context) => BookPage(),
         "/memomain": (context) => MemoPage(),
-        "/EventScreen": (context) => EventScreen(),
+  //      "/EventScreen": (context) => EventScreen(),
         "/LaunchScreen": (context) => LaunchScreen(),
       },
     );
