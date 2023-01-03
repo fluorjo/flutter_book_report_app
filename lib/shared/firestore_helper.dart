@@ -19,14 +19,14 @@ class FirestoreHelper {
     await db.collection('favorites').doc(favId).delete();
   }
 
-  // static Future<List<Favorite>> getUserFavorites(String uid) async {
-  //   List<Favorite> favs;
-  //   QuerySnapshot docs = await db.collection('favorites')
-  //       .where('userId', isEqualTo: uid).get();
-  //   if (docs != null) {
-  //     favs = docs.docs.map((data)=> Favorite.map(data)).toList();
-  //   }
-  //   return favs;
-  // }
+  static Future<List<Favorite>> getUserFavorites(String uid) async {
+    List<Favorite> favs=[];
 
+    QuerySnapshot docs =
+        await db.collection('favorites').where('userId', isEqualTo: uid).get();
+    if (docs != null) {
+      favs = docs.docs.map((data) => Favorite.map(data)).toList();
+    }
+    return favs;
+  }
 }
