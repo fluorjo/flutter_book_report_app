@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:book_report/models/event_detail.dart';
+import 'package:book_report/models/favorite.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:book_report/pages/login_page.dart';
 import 'package:book_report/shared/authentication.dart';
 import 'package:book_report/shared/firestore_helper.dart';
+import 'package:collection/collection.dart';
 
 class EventScreen extends StatelessWidget {
   final String uid;
@@ -47,7 +49,7 @@ class EventList extends StatefulWidget {
 class _EventListState extends State<EventList> {
   final FirebaseFirestore db = FirebaseFirestore.instance;
   List<EventDetail> details = [];
-  //List<Favorite> favorites = [];
+  List<Favorite> favorites = [];
   @override
   void initState() {
     if (mounted) {
@@ -57,6 +59,11 @@ class _EventListState extends State<EventList> {
         });
       });
     }
+    FirestoreHelper.getUserFavorites(widget.uid).then((data) {
+      setState(() {
+        favorites = data;
+      });
+    });
     super.initState();
   }
 
@@ -67,14 +74,17 @@ class _EventListState extends State<EventList> {
       itemBuilder: (context, position) {
         String sub =
             'Date: ${details[position].date} - Start: ${details[position].startTime} - End: ${details[position].endTime}';
-
+        Color starColor =
+            (isUserFavorite(details[position].id) ? Colors.amber : Colors.grey);
         return ListTile(
           title: Text(details[position].description),
           subtitle: Text(sub),
           trailing: IconButton(
-             icon: Icon(Icons.star, color: Colors.grey),
-             onPressed: () {toggleFavorite(details[position]);},
-           ),
+            icon: Icon(Icons.star, color: starColor),
+            onPressed: () {
+              toggleFavorite(details[position]);
+            },
+          ),
         );
       },
     );
@@ -92,10 +102,31 @@ class _EventListState extends State<EventList> {
     return details;
   }
 
-  void toggleFavorite(EventDetail ed)  {
-     FirestoreHelper.addFavorite(ed,widget.uid);
-
+  toggleFavorite(EventDetail ed) async {
+    if (isUserFavorite(ed.id)) {
+      Favorite favorite =
+          favorites.firstWhere((Favorite f) => (f.eventId == ed.id));
+      String favId = favorite.id;
+      await FirestoreHelper.deleteFavorite(favId);
+    } else {
+      await FirestoreHelper.addFavorite(ed, widget.uid);
+    }
+    List<Favorite> updatedFavorites =
+        await FirestoreHelper.getUserFavorites(widget.uid);
+    setState(() {
+      favorites = updatedFavorites;
+    });
   }
 
-  
+  bool isUserFavorite(String eventId) {
+    Favorite? favorite =
+        favorites.firstWhereOrNull((Favorite f) => (f.eventId == eventId));
+//, orElse: () => null
+
+    if (favorite == null) {
+      return false;
+    } else {
+      return true;
+    }
+  }
 }

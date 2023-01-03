@@ -10,20 +10,16 @@ class Favorite {
   String get id => _id;
 
   Favorite.map(DocumentSnapshot document) {
-    this._id = document.id;
-    _eventId = (document.data as DocumentSnapshot)['eventId'];
-    //this._eventId = document.data()['eventId'];
-    //(snapshot.data as DocumentSnapshot)['username']
-    _userId = (document.data as DocumentSnapshot)['userId'];
+    _id = document.id;
+    _eventId = (document.data() as dynamic)['eventId'];
+    _userId = (document.data() as dynamic)['userId'];
   }
 
   Map<String, dynamic> toMap() {
-    var map2 = Map<String, dynamic>();
+    var map2 = <String, dynamic>{};
     map2;
 
-    if (_id != null) {
-      map2['id'] = _id;
-    }
+    map2['id'] = _id;
     map2['eventId'] = _eventId;
     map2['userId'] = _userId;
     return map2;
